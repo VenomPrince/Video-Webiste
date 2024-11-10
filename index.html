@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Gallery</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="login-page">
+        <div class="login-container">
+            <h2>Login</h2> <!-- Ensures the title is properly positioned above the form -->
+            <form id="login-form">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit">Log In</button>
+                <div id="login-error" style="display: none;">Invalid username or password</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Content Page -->
+    <div id="main-content" style="display: none;">
+        <button id="logout" onclick="logout()">Logout</button>
+        <div id="category-page">
+            <h2>Categories</h2>
+            <div class="category-list"></div>
+            <button id="prev-category-page">Previous</button>
+            <button id="next-category-page">Next</button>
+        </div>
+        <div id="video-page" style="display: none;">
+            <h2>Videos</h2>
+            <div class="video-list"></div>
+            <button id="back-to-categories">Back to Categories</button>
+            <button id="prev-video-page">Previous</button>
+            <button id="next-video-page">Next</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
