@@ -1,50 +1,75 @@
 // Video Management Module
 import { videoConfig } from '../config/videos.js';
 
-const CONFIG = {
-    itemsPerPage: 10
-};
-
 export class VideoManager {
     constructor() {
         this.currentPage = 0;
+        this.itemsPerPage = 10;
+        this.videoContainer = document.querySelector('.video-container');
         this.setupEventListeners();
+        this.displayVideos();
     }
 
     setupEventListeners() {
-        document.getElementById("prev-button").onclick = () => this.navigateVideos(-1);
-        document.getElementById("next-button").onclick = () => this.navigateVideos(1);
-    }
-
-    displayVideos(category) {
-        const videos = videoConfig[category];
-        const container = document.getElementById("video-container");
-        container.innerHTML = "";
-        
-        const startIndex = this.currentPage * CONFIG.itemsPerPage;
-        const endIndex = Math.min(startIndex + CONFIG.itemsPerPage, videos.length);
-        
-        for (let i = startIndex; i < endIndex; i++) {
-            const iframe = document.createElement("iframe");
-            iframe.src = videos[i];
-            iframe.allowFullscreen = true;
-            container.appendChild(iframe);
-        }
-        
-        this.updateNavigationButtons(videos.length);
-    }
-
-    updateNavigationButtons(totalVideos) {
         const prevButton = document.getElementById("prev-button");
         const nextButton = document.getElementById("next-button");
+        if (prevButton) prevButton.onclick = () => this.navigateVideos(-1);
+        if (nextButton) nextButton.onclick = () => this.navigateVideos(1);
+    }
+
+    createVideoElement(video) {
+        const videoBox = document.createElement('div');
+        videoBox.className = 'video-box';
         
-        prevButton.disabled = this.currentPage === 0;
-        nextButton.disabled = (this.currentPage + 1) * CONFIG.itemsPerPage >= totalVideos;
+        const iframe = document.createElement('iframe');
+        iframe.src = video.url;
+        iframe.allowFullscreen = true;
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        
+        const videoInfo = document.createElement('div');
+        videoInfo.className = 'video-info';
+        
+        const title = document.createElement('h3');
+        title.textContent = video.title;
+        
+        videoInfo.appendChild(title);
+        videoBox.appendChild(iframe);
+        videoBox.appendChild(videoInfo);
+        
+        return videoBox;
+    }
+
+    displayVideos() {
+        if (!this.videoContainer) return;
+        
+        this.videoContainer.innerHTML = '';
+        
+        // Display videos by category
+        for (const category in videoConfig) {
+            const categorySection = document.createElement('div');
+            categorySection.className = 'category-section';
+            
+            const categoryHeader = document.createElement('h2');
+            categoryHeader.className = 'category-header';
+            categoryHeader.textContent = category;
+            categorySection.appendChild(categoryHeader);
+            
+            const videosContainer = document.createElement('div');
+            videosContainer.className = 'videos-grid';
+            
+            videoConfig[category].forEach(video => {
+                const videoElement = this.createVideoElement(video);
+                videosContainer.appendChild(videoElement);
+            });
+            
+            categorySection.appendChild(videosContainer);
+            this.videoContainer.appendChild(categorySection);
+        }
     }
 
     navigateVideos(direction) {
-        this.currentPage += direction;
-        const currentCategory = Object.keys(videoConfig)[0];
-        this.displayVideos(currentCategory);
+        const totalPages = Math.ceil(Object.values(videoConfig).flat().length / this.itemsPerPage);
+        this.currentPage = Math.max(0, Math.min(this.currentPage + direction, totalPages - 1));
+        this.displayVideos();
     }
 }

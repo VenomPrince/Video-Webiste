@@ -3,6 +3,7 @@ import { Auth } from './auth.js';
 import { VideoManager } from './videoManager.js';
 import { CategoryManager } from './categoryManager.js';
 import { UIEffects } from './uiEffects.js';
+import { CursorEffect } from './cursorEffect.js';
 
 class App {
     constructor() {
@@ -17,6 +18,9 @@ class App {
 
         // Initialize UI effects
         this.uiEffects = new UIEffects();
+
+        // Initialize cursor effect
+        this.cursorEffect = new CursorEffect();
     }
 }
 
