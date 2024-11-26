@@ -1,362 +1,194 @@
-// Default username and password
+// Enhanced Video Gallery Script
 const defaultUsername = "username";
 const defaultPassword = "password";
 
-// Handle login
-document.getElementById("login-form").addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent form submission
+// DOM Elements
+const loginPage = document.getElementById("login-page");
+const mainContent = document.getElementById("main-content");
+const loginForm = document.getElementById("login-form");
+const loginError = document.getElementById("login-error");
+const categoryPage = document.getElementById("category-page");
+const videoPage = document.getElementById("video-page");
 
-    const usernameInput = document.getElementById("username").value;
-    const passwordInput = document.getElementById("password").value;
-
-    // Validate credentials
-    if (usernameInput === defaultUsername && passwordInput === defaultPassword) {
-        document.getElementById("login-page").style.display = "none"; // Hide login page
-        document.getElementById("main-content").style.display = "block"; // Show main content
-    } else {
-        document.getElementById("login-error").style.display = "block"; // Show error message
-    }
-});
-
-// Video Gallery Code
-const categories = {
-    youtube: [
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH",
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH",
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH"
-    ],
-    Movies: [
-     "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH",
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH",
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH"
-    ],
-    Musics: [
-       "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH",
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH",
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH"
-    ],
-    One: [
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH"
-    ],
-    two: [
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH"
-    ],
-    three: [
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH"
-    ],
-    four: [
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH"
-    ],
-    five: [
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH"
-    ], 
-    youtu: [
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH",
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH",
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH"
-    ],
-    Movie: [
-     "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH",
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH",
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH"
-    ],
-    Music: [
-       "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH",
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH",
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH"
-    ],
-    On: [
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH"
-    ],
-    tw: [
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH"
-    ],
-    thee: [
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH"
-    ],
-    for: [
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH"
-    ],
-    fiv: [
-        "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
-        "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG",
-        "https://youtube.com/embed/FPuCaEUtRcA?si=12dQY4iyw-GLez2t",
-        "https://youtube.com/embed/In5se4R7RRk?si=2pbx2E8soEEmVtOH"
-    ]
-};
-
-const categoryKeys = Object.keys(categories);
-const itemsPerPage = 10;
+// State Management
 let currentCategoryIndex = 0;
 let currentVideoIndex = 0;
+const itemsPerPage = 12;
 
-// Display Categories
-// Function to calculate distance and apply glow
-function calculateDistance(event, element) {
-    const rect = element.getBoundingClientRect();
-    const mouseX = event.clientX;
-    const mouseY = event.clientY;
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const distance = Math.sqrt(Math.pow(centerX - mouseX, 2) + Math.pow(centerY - mouseY, 2));
-    return distance;
-}
+// Enhanced Categories with Metadata
+const categories = {
+  youtube: {
+    title: "YouTube Trending",
+    videos: [
+      { url: "https://youtube.com/embed/25KpNP8MuXs", title: "Nature Documentary" },
+      { url: "https://youtube.com/embed/PEl0fJXW1KU", title: "Space Exploration" },
+      // ... other videos
+    ]
+  },
+  movies: {
+    title: "Featured Films",
+    videos: [
+      { url: "https://youtube.com/embed/6nFbvWnsukA", title: "Classic Cinema" },
+      { url: "https://youtube.com/embed/oSHf-gcqZ6Y", title: "Modern Masterpiece" },
+      // ... other videos
+    ]
+  },
+  // ... other categories
+};
 
-function handleMouseMove(event) {
-    const videoItems = document.querySelectorAll('.video-item');
+// Authentication
+loginForm.addEventListener("submit", (event) => {
+  event.preventDefault();
   
-    // Remove 'near-glow' class from all video items
-    videoItems.forEach(item => item.classList.remove('near-glow'));
-  
-    let closestItem = null;
-    let closestDistance = Infinity;
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
 
-    // Check the distance between the mouse and each video item
-    videoItems.forEach(item => {
-        const distance = calculateDistance(event, item);
-        const maxDistance = 200; // Adjust max distance for glow effect if needed
-
-        if (distance < maxDistance && distance < closestDistance) {
-            closestDistance = distance;
-            closestItem = item;
-        }
-    });
-
-    // Apply the glow effect only to the closest video item
-    if (closestItem) {
-        closestItem.classList.add('near-glow');
-    }
-}
-
-// Attach the mouse move listener
-document.addEventListener('mousemove', handleMouseMove);
-
-function displayCategories() {
-    document.getElementById("category-page").style.display = "block";
-    document.getElementById("video-page").style.display = "none";
-    const categoryList = document.querySelector(".category-list");
-    categoryList.innerHTML = "";
-
-    const start = currentCategoryIndex * itemsPerPage;
-    const end = start + itemsPerPage;
-    const categoriesToShow = categoryKeys.slice(start, end);
-
-    categoriesToShow.forEach((category) => {
-        const button = document.createElement("button");
-        button.textContent = category;
-        button.onclick = () => openCategory(category);
-        categoryList.appendChild(button);
-    });
-
-    document.getElementById("prev-category-page").disabled = currentCategoryIndex === 0;
-    document.getElementById("next-category-page").disabled = end >= categoryKeys.length;
-}
-
-// Open Video Category
-function openCategory(category) {
-    document.getElementById("category-page").style.display = "none";
-    document.getElementById("video-page").style.display = "block";
-
-    const videoListContainer = document.querySelector(".video-list");
-    videoListContainer.innerHTML = "";
-
-    const videoList = categories[category];
-    const start = currentVideoIndex * itemsPerPage;
-    const end = start + itemsPerPage;
-    const videosToShow = videoList.slice(start, end);
-
-    videosToShow.forEach((videoUrl, index) => {
-        const videoItem = document.createElement("div");
-        videoItem.classList.add("video-item");
-
-        videoItem.innerHTML = `
-            <iframe width="100%" height="180" src="${videoUrl}" frameborder="0" allowfullscreen></iframe>
-            <div class="video-title">Video ${start + index + 1}</div>
-        `;
-        videoListContainer.appendChild(videoItem);
-    });
-
-    document.getElementById("prev-video-page").disabled = currentVideoIndex === 0;
-    document.getElementById("next-video-page").disabled = end >= videoList.length;
-}
-
-// Category Navigation Controls
-document.getElementById("prev-category-page").onclick = () => {
-    if (currentCategoryIndex > 0) {
-        currentCategoryIndex--;
-        displayCategories();
-    }
-};
-
-document.getElementById("next-category-page").onclick = () => {
-    if ((currentCategoryIndex + 1) * itemsPerPage < categoryKeys.length) {
-        currentCategoryIndex++;
-        displayCategories();
-    }
-};
-
-// Video Navigation Controls
-document.getElementById("prev-video-page").onclick = () => {
-    if (currentVideoIndex > 0) {
-        currentVideoIndex--;
-        openCategory(categoryKeys[currentCategoryIndex]);
-    }
-};
-
-document.getElementById("next-video-page").onclick = () => {
-    if ((currentVideoIndex + 1) * itemsPerPage < categories[categoryKeys[currentCategoryIndex]].length) {
-        currentVideoIndex++;
-        openCategory(categoryKeys[currentCategoryIndex]);
-    }
-};
-
-// Back to Categories
-document.getElementById("back-to-categories").onclick = () => {
-    currentVideoIndex = 0;
+  if (username === defaultUsername && password === defaultPassword) {
+    loginPage.style.display = "none";
+    mainContent.style.display = "block";
     displayCategories();
-};
+    // Add smooth entrance animation
+    mainContent.style.opacity = 0;
+    requestAnimationFrame(() => {
+      mainContent.style.transition = "opacity 0.5s ease";
+      mainContent.style.opacity = 1;
+    });
+  } else {
+    loginError.style.display = "block";
+    // Shake animation for error
+    loginForm.style.animation = "shake 0.5s ease";
+    setTimeout(() => loginForm.style.animation = "", 500);
+  }
+});
 
-function logout() {
-    alert("You have been logged out.");
-    window.location.href = 'login.html'; // Redirect to login page
+// Category Display
+function displayCategories() {
+  categoryPage.style.display = "block";
+  videoPage.style.display = "none";
+  
+  const categoryList = document.querySelector(".category-list");
+  categoryList.innerHTML = "";
+
+  const start = currentCategoryIndex * itemsPerPage;
+  const categoryEntries = Object.entries(categories);
+  const categoriesToShow = categoryEntries.slice(start, start + itemsPerPage);
+
+  categoriesToShow.forEach(([key, category]) => {
+    const button = document.createElement("button");
+    button.textContent = category.title;
+    button.addEventListener("click", () => openCategory(key));
+    button.className = "category-button";
+    categoryList.appendChild(button);
+  });
+
+  updateNavigationButtons();
 }
 
+// Video Display
+function openCategory(categoryKey) {
+  categoryPage.style.display = "none";
+  videoPage.style.display = "block";
+  
+  const videoList = document.querySelector(".video-list");
+  videoList.innerHTML = "";
 
-displayCategories();
+  const category = categories[categoryKey];
+  const start = currentVideoIndex * itemsPerPage;
+  const videosToShow = category.videos.slice(start, start + itemsPerPage);
+
+  videosToShow.forEach((video, index) => {
+    const videoItem = document.createElement("div");
+    videoItem.className = "video-item";
+    videoItem.innerHTML = `
+      <iframe src="${video.url}" allowfullscreen></iframe>
+      <div class="video-title">${video.title}</div>
+    `;
+    videoList.appendChild(videoItem);
+  });
+
+  updateNavigationButtons();
+}
+
+// Navigation Controls
+function updateNavigationButtons() {
+  const categoryEntries = Object.entries(categories);
+  const prevCategoryBtn = document.getElementById("prev-category-page");
+  const nextCategoryBtn = document.getElementById("next-category-page");
+  const prevVideoBtn = document.getElementById("prev-video-page");
+  const nextVideoBtn = document.getElementById("next-video-page");
+
+  if (categoryPage.style.display !== "none") {
+    prevCategoryBtn.disabled = currentCategoryIndex === 0;
+    nextCategoryBtn.disabled = (currentCategoryIndex + 1) * itemsPerPage >= categoryEntries.length;
+  } else {
+    const currentCategory = categories[Object.keys(categories)[currentCategoryIndex]];
+    prevVideoBtn.disabled = currentVideoIndex === 0;
+    nextVideoBtn.disabled = (currentVideoIndex + 1) * itemsPerPage >= currentCategory.videos.length;
+  }
+}
+
+// Navigation Event Listeners
+document.getElementById("prev-category-page").addEventListener("click", () => {
+  if (currentCategoryIndex > 0) {
+    currentCategoryIndex--;
+    displayCategories();
+  }
+});
+
+document.getElementById("next-category-page").addEventListener("click", () => {
+  const categoryEntries = Object.entries(categories);
+  if ((currentCategoryIndex + 1) * itemsPerPage < categoryEntries.length) {
+    currentCategoryIndex++;
+    displayCategories();
+  }
+});
+
+document.getElementById("prev-video-page").addEventListener("click", () => {
+  if (currentVideoIndex > 0) {
+    currentVideoIndex--;
+    openCategory(Object.keys(categories)[currentCategoryIndex]);
+  }
+});
+
+document.getElementById("next-video-page").addEventListener("click", () => {
+  const currentCategory = categories[Object.keys(categories)[currentCategoryIndex]];
+  if ((currentVideoIndex + 1) * itemsPerPage < currentCategory.videos.length) {
+    currentVideoIndex++;
+    openCategory(Object.keys(categories)[currentCategoryIndex]);
+  }
+});
+
+document.getElementById("back-to-categories").addEventListener("click", () => {
+  currentVideoIndex = 0;
+  displayCategories();
+});
+
+// Logout Function
+function logout() {
+  mainContent.style.opacity = 0;
+  setTimeout(() => {
+    mainContent.style.display = "none";
+    loginPage.style.display = "flex";
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+    loginError.style.display = "none";
+    currentCategoryIndex = 0;
+    currentVideoIndex = 0;
+    loginPage.style.opacity = 0;
+    requestAnimationFrame(() => {
+      loginPage.style.transition = "opacity 0.5s ease";
+      loginPage.style.opacity = 1;
+    });
+  }, 500);
+}
+
+// Add shake animation keyframes
+const style = document.createElement("style");
+style.textContent = `
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+  }
+`;
+document.head.appendChild(style);
