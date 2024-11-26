@@ -13,7 +13,7 @@ A modern, responsive web application for browsing and viewing categorized video 
 
 ## Live Demo
 
-Access the live demo at: [Video Gallery Demo](https://venomprince.github.io/Video-Webiste/)
+Access the live demo at: [Video Gallery Demo](https://video-webiste.vercel.app/)
 
 ## Quick Start
 
