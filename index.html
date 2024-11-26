@@ -4,40 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Gallery</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="src/css/main.css">
 </head>
 <body>
     <!-- Login Page -->
-    <div id="login-page">
-        <div class="login-container">
-            <h2>Login</h2> <!-- Ensures the title is properly positioned above the form -->
+    <div id="login-page" class="fade-in">
+        <div class="login-container hover-glow">
+            <h2>Login</h2>
             <form id="login-form">
                 <input type="text" id="username" placeholder="Username" required>
                 <input type="password" id="password" placeholder="Password" required>
-                <button type="submit">Log In</button>
+                <button type="submit" class="btn-primary">Log In</button>
                 <div id="login-error" style="display: none;">Invalid username or password</div>
             </form>
         </div>
     </div>
 
-    <!-- Main Content Page -->
-    <div id="main-content" style="display: none;">
-        <button id="logout" onclick="logout()">Logout</button>
-        <div id="category-page">
-            <h2>Categories</h2>
-            <div class="category-list"></div>
-            <button id="prev-category-page">Previous</button>
-            <button id="next-category-page">Next</button>
+    <!-- Main Content -->
+    <div id="main-content" style="display: none;" class="fade-in">
+        <header class="hover-glow">
+            <h1>Video Gallery</h1>
+            <button id="logout-button" class="btn-logout">Logout</button>
+        </header>
+
+        <!-- Categories Page -->
+        <div id="categories-page">
+            <div id="categories-container" class="grid-container"></div>
         </div>
+
+        <!-- Videos Page -->
         <div id="video-page" style="display: none;">
-            <h2>Videos</h2>
-            <div class="video-list"></div>
-            <button id="back-to-categories">Back to Categories</button>
-            <button id="prev-video-page">Previous</button>
-            <button id="next-video-page">Next</button>
+            <div class="controls">
+                <button id="back-button" class="btn-nav">Back to Categories</button>
+            </div>
+            <div id="video-container" class="grid-container"></div>
+            <div class="pagination">
+                <button id="prev-button" class="btn-nav">Previous</button>
+                <button id="next-button" class="btn-nav">Next</button>
+            </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="src/js/main.js" type="module"></script>
 </body>
 </html>

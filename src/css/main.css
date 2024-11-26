@@ -1,0 +1,6 @@
+/* Main Styles */
+@import 'reset.css';
+@import 'layout.css';
+@import 'components.css';
+@import 'animations.css';
+@import 'responsive.css';
