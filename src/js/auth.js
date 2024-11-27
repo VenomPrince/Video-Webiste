@@ -19,6 +19,7 @@ export class Auth {
     constructor() {
         this.elements = {};
         this.setupEventListeners();
+        this.checkExistingSession();
     }
 
     /**
@@ -32,11 +33,26 @@ export class Auth {
         });
 
         // Add event listeners
-        this.elements.loginForm?.addEventListener("submit", this.handleLogin.bind(this));
-        this.elements.logoutButton?.addEventListener("click", this.handleLogout.bind(this));
+        if (this.elements.loginForm) {
+            this.elements.loginForm.addEventListener("submit", this.handleLogin.bind(this));
+        }
+        if (this.elements.logoutButton) {
+            this.elements.logoutButton.addEventListener("click", this.handleLogout.bind(this));
+        }
 
         // Set initial states
         this.updateUIState(false);
+    }
+
+    /**
+     * Check for existing session
+     * @private
+     */
+    checkExistingSession() {
+        const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+        if (isLoggedIn) {
+            this.updateUIState(true);
+        }
     }
 
     /**
@@ -47,49 +63,40 @@ export class Auth {
     handleLogin(event) {
         event.preventDefault();
 
-        const username = this.elements.usernameInput.value;
-        const password = this.elements.passwordInput.value;
+        const username = this.elements.usernameInput.value.trim();
+        const password = this.elements.passwordInput.value.trim();
 
-        // Validate credentials (replace with your actual authentication logic)
-        this.authenticate(username, password)
-            .then(isValid => {
-                if (isValid) {
-                    this.updateUIState(true);
-                    this.elements.loginError.style.display = 'none';
-                } else {
-                    this.elements.loginError.style.display = 'block';
-                }
-            })
-            .catch(error => {
-                console.error('Authentication error:', error);
-                this.elements.loginError.style.display = 'block';
-            });
+        // Basic validation
+        if (!username || !password) {
+            this.showError('Please enter both username and password');
+            return;
+        }
+
+        // For testing: accept any non-empty credentials
+        this.loginSuccess();
     }
 
     /**
-     * Authenticate user credentials
-     * @param {string} username - Username to validate
-     * @param {string} password - Password to validate
-     * @returns {Promise<boolean>} Promise resolving to authentication result
+     * Show error message
+     * @param {string} message - Error message to display
      * @private
      */
-    async authenticate(username, password) {
-        // Replace this with your actual authentication logic (e.g., API call)
-        try {
-            // Example: Make an API call to your authentication endpoint
-            // const response = await fetch('/api/auth', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify({ username, password })
-            // });
-            // return response.ok;
-
-            // Temporary: Return true for testing (replace with actual authentication)
-            return true;
-        } catch (error) {
-            console.error('Authentication error:', error);
-            return false;
+    showError(message) {
+        if (this.elements.loginError) {
+            this.elements.loginError.textContent = message;
+            this.elements.loginError.style.display = 'block';
         }
+    }
+
+    /**
+     * Handle successful login
+     * @private
+     */
+    loginSuccess() {
+        sessionStorage.setItem('isLoggedIn', 'true');
+        this.updateUIState(true);
+        this.elements.loginError.style.display = 'none';
+        this.elements.loginForm.reset();
     }
 
     /**
@@ -97,8 +104,14 @@ export class Auth {
      * @private
      */
     handleLogout() {
+        sessionStorage.removeItem('isLoggedIn');
         this.updateUIState(false);
-        this.elements.loginForm.reset();
+        if (this.elements.loginForm) {
+            this.elements.loginForm.reset();
+        }
+        if (this.elements.loginError) {
+            this.elements.loginError.style.display = 'none';
+        }
     }
 
     /**
@@ -107,7 +120,11 @@ export class Auth {
      * @private
      */
     updateUIState(isAuthenticated) {
-        this.elements.loginPage.style.display = isAuthenticated ? 'none' : 'block';
-        this.elements.mainContent.style.display = isAuthenticated ? 'block' : 'none';
+        if (this.elements.loginPage) {
+            this.elements.loginPage.style.display = isAuthenticated ? 'none' : 'flex';
+        }
+        if (this.elements.mainContent) {
+            this.elements.mainContent.style.display = isAuthenticated ? 'block' : 'none';
+        }
     }
 }
