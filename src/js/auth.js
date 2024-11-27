@@ -6,12 +6,25 @@ const CONFIG = {
 
 export class Auth {
     constructor() {
-        this.setupEventListeners();
+        // Wait for DOM to be ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => this.setupEventListeners());
+        } else {
+            this.setupEventListeners();
+        }
     }
 
     setupEventListeners() {
-        document.getElementById("login-form").addEventListener("submit", this.handleLogin.bind(this));
-        document.getElementById("logout-button").onclick = this.logout.bind(this);
+        const loginForm = document.getElementById("login-form");
+        const logoutButton = document.getElementById("logout-button");
+        
+        if (loginForm) {
+            loginForm.addEventListener("submit", this.handleLogin.bind(this));
+        }
+        
+        if (logoutButton) {
+            logoutButton.onclick = this.logout.bind(this);
+        }
     }
 
     handleLogin(event) {
