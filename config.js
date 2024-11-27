@@ -18,7 +18,6 @@ export const videoConfig = {
     Music: [
         "https://youtube.com/embed/25KpNP8MuXs?si=UwxA2TMYJWkAuBPO",
         "https://youtube.com/embed/PEl0fJXW1KU?si=XKfCGRg-6fJ2maz1",
-        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu",
-        "https://youtube.com/embed/oSHf-gcqZ6Y?si=yLENEqVnWYTyyWXG"
+        "https://youtube.com/embed/6nFbvWnsukA?si=wOzqPyoXVXsUndOu"
     ]
 };

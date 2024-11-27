@@ -3,47 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A secure video gallery application">
+    <meta name="theme-color" content="#ffffff">
     <title>Video Gallery</title>
     <link rel="stylesheet" href="src/css/main.css">
 </head>
 <body>
-    <!-- Login Page -->
-    <div id="login-page" class="fade-in">
-        <div class="login-container hover-glow">
-            <h2>Login</h2>
-            <form id="login-form">
-                <input type="text" id="username" placeholder="Username" required>
-                <input type="password" id="password" placeholder="Password" required>
-                <button type="submit" class="btn-primary">Log In</button>
-                <div id="login-error" style="display: none;">Invalid username or password</div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <div id="main-content" style="display: none;" class="fade-in">
-        <header class="hover-glow">
-            <h1>Video Gallery</h1>
-            <button id="logout-button" class="btn-logout">Logout</button>
-        </header>
-
-        <!-- Categories Page -->
-        <div id="categories-page">
-            <div id="categories-container" class="grid-container"></div>
-        </div>
-
-        <!-- Videos Page -->
-        <div id="video-page" style="display: none;">
-            <div class="controls">
-                <button id="back-button" class="btn-nav">Back to Categories</button>
+    <main>
+        <!-- Login Section -->
+        <section id="login-page" class="fade-in">
+            <div class="login-container hover-glow">
+                <h2>Login</h2>
+                <form id="login-form" autocomplete="off">
+                    <div class="form-group">
+                        <input type="text" id="username" placeholder="Username" required 
+                               aria-label="Username" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="password" placeholder="Password" required 
+                               aria-label="Password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn-primary">Log In</button>
+                    <div id="login-error" class="error-message" aria-live="polite">
+                        Invalid username or password
+                    </div>
+                </form>
             </div>
-            <div id="video-container" class="grid-container"></div>
-            <div class="pagination">
-                <button id="prev-button" class="btn-nav">Previous</button>
-                <button id="next-button" class="btn-nav">Next</button>
-            </div>
-        </div>
-    </div>
+        </section>
+
+        <!-- Main Content Section -->
+        <section id="main-content" style="display: none;" class="fade-in">
+            <header class="hover-glow">
+                <h1>Video Gallery</h1>
+                <button id="logout-button" class="btn-logout" aria-label="Logout">Logout</button>
+            </header>
+
+            <!-- Categories Section -->
+            <section id="categories-page">
+                <div id="categories-container" class="grid-container" role="list"></div>
+            </section>
+
+            <!-- Videos Section -->
+            <section id="video-page" style="display: none;">
+                <div class="controls">
+                    <button id="back-button" class="btn-nav" aria-label="Back to Categories">
+                        Back to Categories
+                    </button>
+                </div>
+                <div id="video-container" class="grid-container" role="list"></div>
+                <div class="pagination">
+                    <button id="prev-button" class="btn-nav" aria-label="Previous Page">Previous</button>
+                    <button id="next-button" class="btn-nav" aria-label="Next Page">Next</button>
+                </div>
+            </section>
+        </section>
+    </main>
 
     <script src="src/js/main.js" type="module"></script>
 </body>
