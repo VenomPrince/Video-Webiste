@@ -4,10 +4,6 @@
  */
 
 const AUTH_CONFIG = {
-    credentials: {
-        username: "username",
-        password: "password"
-    },
     selectors: {
         loginForm: "#login-form",
         logoutButton: "#logout-button",
@@ -50,36 +46,50 @@ export class Auth {
      */
     handleLogin(event) {
         event.preventDefault();
-        
-        const credentials = {
-            username: this.elements.usernameInput.value,
-            password: this.elements.passwordInput.value
-        };
-        
-        try {
-            if (this.validateCredentials(credentials)) {
-                this.updateUIState(true);
-                this.elements.loginError.style.display = "none";
-            } else {
-                this.elements.loginError.style.display = "block";
-            }
-        } catch (error) {
-            console.error('Authentication error:', error);
-            this.elements.loginError.style.display = "block";
-        }
+
+        const username = this.elements.usernameInput.value;
+        const password = this.elements.passwordInput.value;
+
+        // Validate credentials (replace with your actual authentication logic)
+        this.authenticate(username, password)
+            .then(isValid => {
+                if (isValid) {
+                    this.updateUIState(true);
+                    this.elements.loginError.style.display = 'none';
+                } else {
+                    this.elements.loginError.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Authentication error:', error);
+                this.elements.loginError.style.display = 'block';
+            });
     }
 
     /**
-     * Validate user credentials
-     * @param {Object} credentials - User credentials
-     * @param {string} credentials.username - Username
-     * @param {string} credentials.password - Password
-     * @returns {boolean} - Whether credentials are valid
+     * Authenticate user credentials
+     * @param {string} username - Username to validate
+     * @param {string} password - Password to validate
+     * @returns {Promise<boolean>} Promise resolving to authentication result
      * @private
      */
-    validateCredentials({ username, password }) {
-        return username === AUTH_CONFIG.credentials.username && 
-               password === AUTH_CONFIG.credentials.password;
+    async authenticate(username, password) {
+        // Replace this with your actual authentication logic (e.g., API call)
+        try {
+            // Example: Make an API call to your authentication endpoint
+            // const response = await fetch('/api/auth', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({ username, password })
+            // });
+            // return response.ok;
+
+            // Temporary: Return true for testing (replace with actual authentication)
+            return true;
+        } catch (error) {
+            console.error('Authentication error:', error);
+            return false;
+        }
     }
 
     /**
@@ -87,18 +97,8 @@ export class Auth {
      * @private
      */
     handleLogout() {
-        this.resetForm();
         this.updateUIState(false);
-    }
-
-    /**
-     * Reset the login form
-     * @private
-     */
-    resetForm() {
-        this.elements.usernameInput.value = "";
-        this.elements.passwordInput.value = "";
-        this.elements.loginError.style.display = "none";
+        this.elements.loginForm.reset();
     }
 
     /**
@@ -107,7 +107,7 @@ export class Auth {
      * @private
      */
     updateUIState(isAuthenticated) {
-        this.elements.loginPage.style.display = isAuthenticated ? "none" : "flex";
-        this.elements.mainContent.style.display = isAuthenticated ? "block" : "none";
+        this.elements.loginPage.style.display = isAuthenticated ? 'none' : 'block';
+        this.elements.mainContent.style.display = isAuthenticated ? 'block' : 'none';
     }
 }
