@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Clear-Site-Data" content="cache">
     <meta name="description" content="A secure video gallery application">
     <meta name="theme-color" content="#ffffff">
     <title>Video Gallery</title>
-    <link rel="stylesheet" href="src/css/main.css">
+    <link rel="stylesheet" href="src/css/main.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="src/css/cursor-effects.css?v=<?php echo time(); ?>">
 </head>
 <body>
     <main>
@@ -24,7 +29,7 @@
                                aria-label="Password" class="form-control">
                     </div>
                     <button type="submit" class="btn-primary">Log In</button>
-                    <div id="login-error" class="error-message" aria-live="polite">
+                    <div id="login-error" class="error-message" aria-live="polite" style="display: none;">
                         Invalid username or password
                     </div>
                 </form>
@@ -59,6 +64,18 @@
         </section>
     </main>
 
-    <script src="src/js/main.js" type="module"></script>
+    <script src="src/js/main.js?v=<?php echo time(); ?>" type="module"></script>
+    <script type="module">
+        import { CursorEffects } from './src/js/cursor-effects.js?v=<?php echo time(); ?>';
+        // Initialize cursor effects immediately
+        const cursor = new CursorEffects();
+        
+        // Re-initialize on page transitions
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!document.querySelector('.custom-cursor')) {
+                new CursorEffects();
+            }
+        });
+    </script>
 </body>
 </html>

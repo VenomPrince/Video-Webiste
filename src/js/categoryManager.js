@@ -154,5 +154,10 @@ export class CategoryManager {
 
         this.elements.categoriesPage.style.display = this.currentCategory ? "none" : "block";
         this.elements.videoPage.style.display = this.currentCategory ? "block" : "none";
+        if (this.elements.backButton) {
+            this.elements.backButton.textContent = 'Back to Categories';
+            this.elements.backButton.id = 'back-button';
+            this.elements.backButton.className = 'btn-back';
+        }
     }
 }

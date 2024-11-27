@@ -7,6 +7,7 @@ import { Auth } from './auth.js';
 import { VideoManager } from './videoManager.js';
 import { CategoryManager } from './categoryManager.js';
 import { UIEffects } from './uiEffects.js';
+import { CursorEffects } from './cursor-effects.js';
 
 class App {
     constructor() {
@@ -19,6 +20,9 @@ class App {
      */
     initializeComponents() {
         try {
+            // Initialize cursor effects immediately
+            this.cursorEffects = new CursorEffects();
+
             // Initialize authentication
             this.auth = new Auth();
 

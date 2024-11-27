@@ -1,0 +1,6 @@
+@echo off
+echo Clearing browser cache...
+taskkill /F /IM "chrome.exe" 2>nul
+timeout /t 2 /nobreak
+echo Starting server...
+python server.py

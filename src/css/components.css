@@ -117,6 +117,38 @@ input:focus {
     font-size: 1.8rem;
 }
 
+/* Back Button Style */
+.btn-back {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: #2c2c2c;  /* Dark gray/black background */
+    color: #f0f0f0;  /* Light text for contrast */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-back:hover {
+    background-color: #1c1c1c;  /* Slightly darker on hover */
+    transform: scale(1.05);
+}
+
+.btn-back:active {
+    background-color: #0c0c0c;  /* Even darker when pressed */
+    transform: scale(0.95);
+}
+
+.btn-back::before {
+    content: '←';
+    margin-right: 8px;
+    font-weight: bold;
+}
+
 /* Video container styles */
 #video-container {
     display: grid;
