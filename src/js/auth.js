@@ -39,9 +39,19 @@ export class Auth {
     }
 
     logout() {
-        document.getElementById("login-page").style.display = "block";
-        document.getElementById("main-content").style.display = "none";
+        // Reset form
         document.getElementById("username").value = "";
         document.getElementById("password").value = "";
+        document.getElementById("login-error").style.display = "none";
+        
+        // Switch views
+        document.getElementById("main-content").style.display = "none";
+        const loginPage = document.getElementById("login-page");
+        loginPage.style.removeProperty("display");  // Let CSS handle the display
+        
+        // Reapply fade-in animation
+        loginPage.classList.remove("fade-in");
+        void loginPage.offsetWidth; // Trigger reflow
+        loginPage.classList.add("fade-in");
     }
 }

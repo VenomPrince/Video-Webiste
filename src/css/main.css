@@ -1,7 +1,21 @@
 /* Main Styles */
-@import 'reset.css';
-@import 'layout.css';
-@import 'components.css';
-@import 'animations.css';
-@import 'responsive.css';
-@import 'cursor-effects.css';
+@import './reset.css';
+@import './layout.css';
+@import './components.css';
+@import './animations.css';
+@import './responsive.css';
+@import './cursor-effects.css';
+
+/* Base Styles */
+body {
+    background: #121212;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+* {
+    box-sizing: border-box;
+}

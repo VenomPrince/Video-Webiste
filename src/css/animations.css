@@ -47,3 +47,41 @@
 .hover-glow:hover {
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
+
+/* Fade In Animation */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in forwards;
+}
+
+/* Cursor Animation */
+.cursor {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.cursor::after {
+    content: "";
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    border: 8px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    top: -8px;
+    left: -8px;
+    animation: cursorAnim 0.5s infinite alternate;
+}
+
+@keyframes cursorAnim {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(0.7);
+    }
+}
