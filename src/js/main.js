@@ -21,10 +21,10 @@ class App {
     initializeComponents() {
         try {
             // Initialize cursor effects immediately
-            this.cursorEffects = new CursorEffects();
+            new CursorEffects();
 
             // Initialize authentication
-            this.auth = new Auth();
+            new Auth();
 
             // Initialize video management
             this.videoManager = new VideoManager();
@@ -33,7 +33,7 @@ class App {
             this.categoryManager = new CategoryManager(this.videoManager);
 
             // Initialize UI effects
-            this.uiEffects = new UIEffects();
+            new UIEffects();
 
             console.log('Application initialized successfully');
         } catch (error) {

@@ -61,7 +61,7 @@ export class Auth {
      * @private
      */
     handleLogin(event) {
-        event.preventDefault();
+        event.preventDefault();  // Prevent form submission
 
         const username = this.elements.usernameInput.value.trim();
         const password = this.elements.passwordInput.value.trim();
@@ -74,6 +74,18 @@ export class Auth {
 
         // For testing: accept any non-empty credentials
         this.loginSuccess();
+        
+        // Hide login page
+        if (this.elements.loginPage) {
+            this.elements.loginPage.style.display = 'none';
+        }
+        
+        // Show main content
+        if (this.elements.mainContent) {
+            this.elements.mainContent.style.display = 'block';
+        }
+
+        return false; // Prevent form submission
     }
 
     /**
@@ -125,6 +137,9 @@ export class Auth {
         }
         if (this.elements.mainContent) {
             this.elements.mainContent.style.display = isAuthenticated ? 'block' : 'none';
+        }
+        if (this.elements.logoutButton) {
+            this.elements.logoutButton.style.display = isAuthenticated ? 'block' : 'none';
         }
     }
 }

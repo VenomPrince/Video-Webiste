@@ -81,3 +81,42 @@ body {
     font-size: 0.9rem;
     text-align: center;
 }
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-color-hover);
+}
+
+.btn-primary:active {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: scale(0.98);
+}
+
+.navigation-buttons button {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--text-primary);
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.navigation-buttons button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.navigation-buttons button:active {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(0.98);
+}

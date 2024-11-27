@@ -17,25 +17,16 @@ export class VideoManager {
         if (nextButton) nextButton.onclick = () => this.navigateVideos(1);
     }
 
-    createVideoElement(video) {
+    createVideoElement(videoUrl) {
         const videoBox = document.createElement('div');
         videoBox.className = 'video-box';
         
         const iframe = document.createElement('iframe');
-        iframe.src = video.url;
+        iframe.src = videoUrl;
         iframe.allowFullscreen = true;
         iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
         
-        const videoInfo = document.createElement('div');
-        videoInfo.className = 'video-info';
-        
-        const title = document.createElement('h3');
-        title.textContent = video.title;
-        
-        videoInfo.appendChild(title);
         videoBox.appendChild(iframe);
-        videoBox.appendChild(videoInfo);
-        
         return videoBox;
     }
 
@@ -49,16 +40,17 @@ export class VideoManager {
             const categorySection = document.createElement('div');
             categorySection.className = 'category-section';
             
-            const categoryHeader = document.createElement('h2');
-            categoryHeader.className = 'category-header';
-            categoryHeader.textContent = category;
-            categorySection.appendChild(categoryHeader);
+            // Add category title
+            const categoryTitle = document.createElement('h2');
+            categoryTitle.textContent = category;
+            categorySection.appendChild(categoryTitle);
             
+            // Add videos
             const videosContainer = document.createElement('div');
-            videosContainer.className = 'videos-grid';
+            videosContainer.className = 'videos-container';
             
-            videoConfig[category].forEach(video => {
-                const videoElement = this.createVideoElement(video);
+            videoConfig[category].forEach(videoUrl => {
+                const videoElement = this.createVideoElement(videoUrl);
                 videosContainer.appendChild(videoElement);
             });
             
@@ -68,8 +60,10 @@ export class VideoManager {
     }
 
     navigateVideos(direction) {
-        const totalPages = Math.ceil(Object.values(videoConfig).flat().length / this.itemsPerPage);
-        this.currentPage = Math.max(0, Math.min(this.currentPage + direction, totalPages - 1));
+        const categories = Object.keys(videoConfig);
+        if (categories.length === 0) return;
+
+        this.currentPage = (this.currentPage + direction + categories.length) % categories.length;
         this.displayVideos();
     }
 }
