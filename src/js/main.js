@@ -8,6 +8,28 @@ import { VideoManager } from './videoManager.js';
 import { CategoryManager } from './categoryManager.js';
 import { UIEffects } from './uiEffects.js';
 import { CursorEffects } from './cursor-effects.js';
+import { videoConfig } from '../config.js';
+
+// Function to display videos based on category
+function displayVideos(category) {
+    const videoContainer = document.getElementById('video-container');
+    videoContainer.innerHTML = ''; // Clear existing videos
+
+    if (videoConfig[category]) {
+        videoConfig[category].forEach(videoUrl => {
+            const iframe = document.createElement('iframe');
+            iframe.src = videoUrl;
+            iframe.width = '560';
+            iframe.height = '315';
+            iframe.frameBorder = '0';
+            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+            iframe.allowFullscreen = true;
+            videoContainer.appendChild(iframe);
+        });
+    } else {
+        console.error(`Category "${category}" not found in videoConfig.`);
+    }
+}
 
 class App {
     constructor() {
@@ -46,6 +68,7 @@ class App {
 document.addEventListener('DOMContentLoaded', () => {
     try {
         window.app = new App();
+        displayVideos('youtube');
     } catch (error) {
         console.error('Failed to start application:', error);
     }

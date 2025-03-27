@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Code Hand Interface</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+        }
+        #code-hand {
+            position: relative;
+            font-size: 16px;
+            color: #0f0;
+            text-shadow: 0 0 10px #0f0;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        #code-hand:hover {
+            transform: scale(1.1);
+        }
+        .finger {
+            position: absolute;
+            transform-origin: bottom center;
+            transition: transform 0.3s ease;
+        }
+        #gesture-text {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #0f0;
+            font-size: 24px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        #code-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            opacity: 0.1;
+        }
+        .code-stream {
+            position: absolute;
+            color: #0f0;
+            font-size: 12px;
+            opacity: 0.3;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="code-background"></div>
+    <div id="gesture-text">🖕 Coded Gesture</div>
+    <div id="code-hand">
+        <div class="finger" style="left: 40%; transform: rotate(-20deg);">
+            01010 11001 10110<br>
+            10101 01100 11010<br>
+            11011 00111 10101
+        </div>
+        <div class="finger" style="left: 50%; transform: rotate(0deg);">
+            10110 01101 11001<br>
+            01011 10010 00111<br>
+            11100 01010 10101
+        </div>
+        <div class="finger" style="left: 60%; transform: rotate(20deg);">
+            11001 10110 01011<br>
+            00111 11010 10101<br>
+            01100 10011 11011
+        </div>
+    </div>
+
+    <script>
+        // Create falling code background
+        function createCodeStream() {
+            const background = document.getElementById('code-background');
+            const codeStream = document.createElement('div');
+            codeStream.classList.add('code-stream');
+            
+            // Generate random binary/hex-like code
+            const codeLength = Math.floor(Math.random() * 20) + 10;
+            const codeContent = Array.from({length: codeLength}, () => 
+                Math.random() < 0.5 ? '0' : '1'
+            ).join('');
+            
+            codeStream.textContent = codeContent;
+            codeStream.style.left = `${Math.random() * 100}%`;
+            codeStream.style.animationDuration = `${Math.random() * 10 + 5}s`;
+            
+            background.appendChild(codeStream);
+
+            // Remove the element after animation
+            codeStream.addEventListener('animationend', () => {
+                background.removeChild(codeStream);
+            });
+        }
+
+        // Create continuous code streams
+        setInterval(createCodeStream, 200);
+
+        // Interactive hover effect
+        const codeHand = document.getElementById('code-hand');
+        const gestureText = document.getElementById('gesture-text');
+
+        codeHand.addEventListener('mouseenter', () => {
+            gestureText.style.opacity = '1';
+            codeHand.querySelectorAll('.finger').forEach((finger, index) => {
+                finger.style.transform = `rotate(${(index - 1) * 40}deg)`;
+            });
+        });
+
+        codeHand.addEventListener('mouseleave', () => {
+            gestureText.style.opacity = '0';
+            codeHand.querySelectorAll('.finger').forEach(finger => {
+                finger.style.transform = 'rotate(0deg)';
+            });
+        });
+    </script>
+</body>
+</html>
